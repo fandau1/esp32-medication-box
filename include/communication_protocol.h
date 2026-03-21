@@ -9,23 +9,27 @@ namespace CommunicationProtocol {
 enum class IncomingAction {
   UNKNOWN,
   GET_CONFIGURATION_SCHEDULE,
-  UPLOAD_CONFIGURATION_SCHEDULE,
+  POST_CONFIGURATION_SCHEDULE,
 };
 
 enum class OutgoingAction {
   UNKNOWN,
   GET_CONFIGURATION_SCHEDULE,
-  MEDICAMENTS_TAKEN_CONFIRMATION,
-  HEARTBEAT
+  POST_MEDICAMENTS_TAKEN_CONFIRMATION,
+  POST_HEARTBEAT
 };
 
 IncomingAction incomingActionFromString(const String& actionStr);
 String outgoingActionToString(OutgoingAction action);
 
-String serializeConfiguration(const MedicationConfiguration& config);
-String serializeMedicamentsTaken(const String& taken_at);
-String serializeHeartbeat();
-MedicationConfiguration deserializeConfiguration(const JsonDocument& doc);
+// ESP32 -> Phone
+String serializeOutgoingGetConfigurationSchedule(const MedicationConfiguration& config);
+String serializeOutgoingPostMedicamentsTaken(const String& taken_at);
+String serializeOutgoingPostHeartbeat();
+
+// Phone -> ESP32
+String serializeIncomingGetConfigurationSchedule();
+MedicationConfiguration deserializeIncomingPostConfigurationSchedule(const JsonDocument& doc);
 
 } // namespace CommunicationProtocol
 

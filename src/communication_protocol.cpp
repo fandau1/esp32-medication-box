@@ -4,7 +4,7 @@ namespace CommunicationProtocol {
 
 IncomingAction incomingActionFromString(const String& actionStr) {
   if (actionStr == "post-configuration-schedule") {
-    return IncomingAction::UPLOAD_CONFIGURATION_SCHEDULE;
+    return IncomingAction::POST_CONFIGURATION_SCHEDULE;
   }
   if (actionStr == "get-configuration-schedule") {
     return IncomingAction::GET_CONFIGURATION_SCHEDULE;
@@ -16,16 +16,16 @@ String outgoingActionToString(OutgoingAction action) {
   switch (action) {
     case OutgoingAction::GET_CONFIGURATION_SCHEDULE:
       return "get-configuration-schedule";
-    case OutgoingAction::MEDICAMENTS_TAKEN_CONFIRMATION:
+    case OutgoingAction::POST_MEDICAMENTS_TAKEN_CONFIRMATION:
       return "medicaments-taken-confirmation";
-    case OutgoingAction::HEARTBEAT:
+    case OutgoingAction::POST_HEARTBEAT:
       return "heartbeat";
     default:
       return "unknown";
   }
 }
 
-String serializeConfiguration(const MedicationConfiguration& config) {
+String serializeOutgoingGetConfigurationSchedule(const MedicationConfiguration& config) {
   JsonDocument doc;
   doc["action"] = outgoingActionToString(OutgoingAction::GET_CONFIGURATION_SCHEDULE);
   JsonObject body = doc["body"].to<JsonObject>();
@@ -40,9 +40,9 @@ String serializeConfiguration(const MedicationConfiguration& config) {
   return output;
 }
 
-String serializeMedicamentsTaken(const String& taken_at) {
+String serializeOutgoingPostMedicamentsTaken(const String& taken_at) {
   JsonDocument doc;
-  doc["action"] = outgoingActionToString(OutgoingAction::MEDICAMENTS_TAKEN_CONFIRMATION);
+  doc["action"] = outgoingActionToString(OutgoingAction::POST_MEDICAMENTS_TAKEN_CONFIRMATION);
   JsonObject body = doc["body"].to<JsonObject>();
   body["taken_at"] = taken_at;
   String output;
@@ -50,15 +50,23 @@ String serializeMedicamentsTaken(const String& taken_at) {
   return output;
 }
 
-String serializeHeartbeat() {
+String serializeOutgoingPostHeartbeat() {
   JsonDocument doc;
-  doc["action"] = outgoingActionToString(OutgoingAction::HEARTBEAT);
+  doc["action"] = outgoingActionToString(OutgoingAction::POST_HEARTBEAT);
   String output;
   serializeJson(doc, output);
   return output;
 }
 
-MedicationConfiguration deserializeConfiguration(const JsonDocument& doc) {
+String serializeOutgoingGetConfigurationSchedule() {
+  JsonDocument doc;
+  doc["action"] = outgoingActionToString(OutgoingAction::GET_CONFIGURATION_SCHEDULE);
+  String output;
+  serializeJson(doc, output);
+  return output;
+}
+
+MedicationConfiguration deserializeIncomingPostConfigurationSchedule(const JsonDocument& doc) {
   MedicationConfiguration config;
 
   JsonObjectConst body = doc["body"].as<JsonObjectConst>();
