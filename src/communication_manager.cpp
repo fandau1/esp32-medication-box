@@ -71,6 +71,7 @@ void CommunicationManager::onBleReceive(const std::string& value) {
     case CommunicationProtocol::IncomingAction::POST_CONFIGURATION_SCHEDULE: {
       MedicationConfiguration config = CommunicationProtocol::deserializeIncomingPostConfigurationSchedule(doc);
       EEPROMService::saveConfiguration(config);
+      Time_manager::synced = false;
       Serial.println("Configuration schedule saved to EEPROM");
       break;
     }

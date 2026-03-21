@@ -10,6 +10,7 @@
 class PillsTracker {
     public:
         PillsTracker(CommunicationManager& communicationManager) : communicationManager_(communicationManager) {};
+        void init();
         void onLoop();
         void onPillTaken();
         void notifyPillTaken();
@@ -17,8 +18,10 @@ class PillsTracker {
 
     private:
       CommunicationManager& communicationManager_;
-        bool morningPillTaken = false;
-        bool eveningPillTaken = false;
+      bool morningPillTaken = false;
+      bool eveningPillTaken = false;
+      bool updated = false;
+
 };
 
 #endif // PILLS_TRACKER

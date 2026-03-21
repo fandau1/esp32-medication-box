@@ -10,6 +10,8 @@ class Time_manager {
         static time_t getRTC();
         static String getUTCString();
         static int getMinsInDay();
+
+        static bool synced;
 };
 
 #endif // TIME_MANAGER_H

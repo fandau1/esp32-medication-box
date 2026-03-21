@@ -1,11 +1,14 @@
 #include "time_manager.h"
 
+bool Time_manager::synced = false;
+
 void Time_manager::setRTC(time_t right_time) {
     struct timeval tv;
     tv.tv_sec = right_time;
     tv.tv_usec = 0;
 
     settimeofday(&tv, NULL);
+    synced = true;
 }
 
 time_t Time_manager::getRTC() {
