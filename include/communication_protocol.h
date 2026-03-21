@@ -10,7 +10,7 @@ enum class IncomingAction {
   UNKNOWN,
   GET_CONFIGURATION_SCHEDULE,
   POST_CONFIGURATION_SCHEDULE,
-  GET_NTC_TIME,
+  POST_NTC_TIME,
 };
 
 enum class OutgoingAction {

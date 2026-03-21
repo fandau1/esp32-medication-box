@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 #include "Buzzer.h"
 #include "Button.h"
+#include "pills_tracker.h"
 
 #define BUTTON_PIN 14
 #define BUZZER_PIN 18
@@ -17,6 +18,7 @@ EEPROMService eepromService;
 CommunicationManager commManager(bleService, eepromService);
 Buzzer buzzer;
 Button button;
+PillsTracker pilstracker;
 
 void checkButton() {
   Event event = button.getEvent();
@@ -24,9 +26,12 @@ void checkButton() {
     case Event::None:
       return;
     case Event::SinglePress:
+      // user take the pill
+      pilstracker.onPillTaken();
       buzzer.buzz(1, 300, 0);
       break;
     case Event::LongPress:
+      // user reset the pills states
       buzzer.buzz(1, 1000, 0);
       break;
     default:
@@ -55,4 +60,5 @@ void loop() {
   button.readButton();    
   checkButton();
   commManager.loop();
+  pilstracker.onLoop();
 }

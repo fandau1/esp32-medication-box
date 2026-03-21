@@ -9,8 +9,8 @@ IncomingAction incomingActionFromString(const String& actionStr) {
   if (actionStr == "get-configuration-schedule") {
     return IncomingAction::GET_CONFIGURATION_SCHEDULE;
   }
-  if (actionStr == "get-ntc-time") {
-    return IncomingAction::GET_NTC_TIME;
+  if (actionStr == "post-ntc-time") {
+    return IncomingAction::POST_NTC_TIME;
   }
   return IncomingAction::UNKNOWN;
 }
@@ -24,7 +24,7 @@ String outgoingActionToString(OutgoingAction action) {
     case OutgoingAction::POST_HEARTBEAT:
       return "heartbeat";
     case OutgoingAction::GET_NTC_TIME:
-      return "get-ntc-time";
+      return "post-ntc-time";
     default:
       return "unknown";
   }

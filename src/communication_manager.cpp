@@ -80,7 +80,7 @@ void CommunicationManager::onBleReceive(const std::string& value) {
       Serial.println("Sended requested configuration response");
       break;
     }
-    case CommunicationProtocol::IncomingAction::GET_NTC_TIME: {
+    case CommunicationProtocol::IncomingAction::POST_NTC_TIME: {
       unsigned long unix_timestamp = CommunicationProtocol::deserializeIncomingGetNtcTimeTimestamp(doc);
       Time_manager::setRTC(unix_timestamp);
       break;
