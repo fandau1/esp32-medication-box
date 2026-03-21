@@ -3,24 +3,20 @@
 
 #include "time_manager.h"
 #include "eeprom_service.h"
-
-enum class DayMedicationState {
-    BEFORE_ALARM,
-    AT_ALARM,
-    AFTER_ALARM,
-    MEDICATION_COLLECTED
-};
+#include "Buzzer.h"
+#include "Time_manager.h"
 
 class PillsTracker {
     public:
-        PillsTracker(EEPROMService eeprom_service);
-        void onPillTaken();
+        PillsTracker() = default;
         void onLoop();
+        void onPillTaken();
+        void notifyPillTaken();
+        void savePillTaken();
 
     private:
-        DayMedicationState morningState;
-        DayMedicationState eveningState;
-        EEPROMService eeprom_service;
+        bool morningPillTaken = false;
+        bool eveningPillTaken = false;
 };
 
 #endif // PILLS_TRACKER

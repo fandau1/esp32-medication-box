@@ -27,3 +27,9 @@ String Time_manager::getUTCString() {
 
     return String(buf);
 }
+
+int Time_manager::getMinsInDay() {
+    time_t now = time(NULL);
+    struct tm *utcTime = gmtime(&now);
+    return utcTime->tm_hour * 60 + utcTime->tm_min;
+}

@@ -3,12 +3,18 @@
 
 class Buzzer {
 public:
-    void begin(int pin);
-    void buzz(int count, unsigned long duration);
-    void buzz(int count, unsigned long duration, unsigned long pause);
+    Buzzer() = delete;
+    static void begin(int pin);
+    static void buzz(int count, unsigned long duration);
+    static void buzz(int count, unsigned long duration, unsigned long pause);
+
+    static void turnAlarmOn();
+    static void turnAlarmOff();
+    static bool isAlarmOn();
 
 private:
-    int buzzer_pin;
+    static int buzzer_pin_;
+    static bool is_alarm_on;
 };
 
 #endif // BUZZER_H

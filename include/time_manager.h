@@ -8,7 +8,8 @@ class Time_manager {
     public:
         static void setRTC(time_t right_time);
         static time_t getRTC();
-        String Time_manager::getUTCString();
+        static String getUTCString();
+        static int getMinsInDay();
 };
 
 #endif // TIME_MANAGER_H

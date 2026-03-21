@@ -8,7 +8,7 @@
 
 class CommunicationManager {
 public:
-    CommunicationManager(BluetoothService& bleService, EEPROMService& eepromService);
+    CommunicationManager(BluetoothService& bleService);
     void begin();
     void loop();
     void onBleReceive(const std::string& value);
@@ -17,7 +17,6 @@ public:
     void outgoingGetNtcTime();
 private:
     BluetoothService& bleService;
-    EEPROMService& eepromService;
 };
 
 #endif // COMMUNICATION_MANAGER_H

@@ -3,8 +3,8 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 
-CommunicationManager::CommunicationManager(BluetoothService& bleService, EEPROMService& eepromService)
-    : bleService(bleService), eepromService(eepromService) {}
+CommunicationManager::CommunicationManager(BluetoothService& bleService)
+    : bleService(bleService) {}
 
 void CommunicationManager::begin() {
     // The onBleReceive method needs to be called from a static context or a lambda without captures.
@@ -69,12 +69,12 @@ void CommunicationManager::onBleReceive(const std::string& value) {
   switch (incomingAction) {
     case CommunicationProtocol::IncomingAction::POST_CONFIGURATION_SCHEDULE: {
       MedicationConfiguration config = CommunicationProtocol::deserializeIncomingPostConfigurationSchedule(doc);
-      eepromService.saveConfiguration(config);
+      EEPROMService::saveConfiguration(config);
       Serial.println("Configuration schedule saved to EEPROM");
       break;
     }
     case CommunicationProtocol::IncomingAction::GET_CONFIGURATION_SCHEDULE: {
-      MedicationConfiguration config = eepromService.loadConfiguration();
+      MedicationConfiguration config = EEPROMService::loadConfiguration();
       String response = CommunicationProtocol::serializeOutgoingGetConfigurationSchedule(config);
       bleService.sendJson(response);
       Serial.println("Sended requested configuration response");

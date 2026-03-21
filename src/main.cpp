@@ -14,9 +14,7 @@
 #define LED_EVENING_PIN 5
 
 BluetoothService bleService;
-EEPROMService eepromService;
-CommunicationManager commManager(bleService, eepromService);
-Buzzer buzzer;
+CommunicationManager commManager(bleService);
 Button button;
 PillsTracker pilstracker;
 
@@ -28,11 +26,11 @@ void checkButton() {
     case Event::SinglePress:
       // user take the pill
       pilstracker.onPillTaken();
-      buzzer.buzz(1, 300, 0);
+      Buzzer::buzz(1, 300, 0);
       break;
     case Event::LongPress:
       // user reset the pills states
-      buzzer.buzz(1, 1000, 0);
+      Buzzer::buzz(1, 1000, 0);
       break;
     default:
       break;
@@ -43,11 +41,11 @@ void setup() {
   Serial.begin(9600);
   analogReadResolution(12);
 
-  eepromService.begin();
+  EEPROMService::begin();
 
   bleService.begin("ESP32_SENSOR");
   commManager.begin();
-  buzzer.begin(BUZZER_PIN);
+  Buzzer::begin(BUZZER_PIN);
   button.setPin(BUTTON_PIN);
 
   pinMode(LED_MORNING_PIN, OUTPUT);
