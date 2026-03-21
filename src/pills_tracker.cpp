@@ -1,4 +1,5 @@
 #include "pills_tracker.h"
+#include "config.h"
 
 void PillsTracker::init() {
     int current_time_mins = Time_manager::getMinsInDay();
@@ -45,6 +46,8 @@ void PillsTracker::onLoop() {
         Buzzer::turnAlarmOn();
     }
 
+    digitalWrite(LED_MORNING_PIN, morningPillTaken ? HIGH : LOW);
+    digitalWrite(LED_EVENING_PIN, eveningPillTaken ? HIGH : LOW);
 }
 
 void PillsTracker::onPillTaken() {
