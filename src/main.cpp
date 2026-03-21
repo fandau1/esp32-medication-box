@@ -6,9 +6,11 @@
 #include "Buzzer.h"
 #include "Button.h"
 
-#define LED_EXTERNAL_PIN 4
 #define BUTTON_PIN 14
 #define BUZZER_PIN 18
+
+#define LED_MORNING_PIN 4 
+#define LED_EVENING_PIN 5
 
 BluetoothService bleService;
 EEPROMService eepromService;
@@ -43,7 +45,8 @@ void setup() {
   buzzer.begin(BUZZER_PIN);
   button.setPin(BUTTON_PIN);
 
-
+  pinMode(LED_MORNING_PIN, OUTPUT);
+  pinMode(LED_EVENING_PIN, OUTPUT);
 
   Serial.println("BLE ready – ESP32_SENSOR");
 }
