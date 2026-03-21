@@ -9,6 +9,9 @@ IncomingAction incomingActionFromString(const String& actionStr) {
   if (actionStr == "get-configuration-schedule") {
     return IncomingAction::GET_CONFIGURATION_SCHEDULE;
   }
+  if (actionStr == "get-ntc-time") {
+    return IncomingAction::GET_NTC_TIME;
+  }
   return IncomingAction::UNKNOWN;
 }
 
@@ -20,6 +23,8 @@ String outgoingActionToString(OutgoingAction action) {
       return "medicaments-taken-confirmation";
     case OutgoingAction::POST_HEARTBEAT:
       return "heartbeat";
+    case OutgoingAction::GET_NTC_TIME:
+      return "get-ntc-time";
     default:
       return "unknown";
   }
@@ -58,9 +63,27 @@ String serializeOutgoingPostHeartbeat() {
   return output;
 }
 
+String serializeOutgoingGetNtcTime(unsigned long current_timestamp) {
+  JsonDocument doc;
+  doc["action"] = outgoingActionToString(OutgoingAction::GET_NTC_TIME);
+  doc["current_timestamp"] = current_timestamp;
+  String output;
+  serializeJson(doc, output);
+  return output;
+}
+
 String serializeIncomingGetConfigurationSchedule() {
   JsonDocument doc;
   doc["action"] = outgoingActionToString(OutgoingAction::GET_CONFIGURATION_SCHEDULE);
+  String output;
+  serializeJson(doc, output);
+  return output;
+}
+
+String serializeIncomingGetNtcTime(unsigned long current_timestamp) {
+  JsonDocument doc;
+  doc["action"] = "get-ntc-time";
+  doc["current_timestamp"] = current_timestamp;
   String output;
   serializeJson(doc, output);
   return output;
@@ -83,6 +106,10 @@ MedicationConfiguration deserializeIncomingPostConfigurationSchedule(const JsonD
   config.evening.alert.minute = evening_alert.substring(evening_alert.indexOf(':') + 1).toInt();
 
   return config;
+}
+
+unsigned long deserializeIncomingGetNtcTimeTimestamp(const JsonDocument& doc) {
+  return doc["current_timestamp"] | 0;
 }
 
 } // namespace CommunicationProtocol

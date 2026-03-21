@@ -24,10 +24,38 @@ void CommunicationManager::loop() {
 
   const unsigned long now = millis();
   if (now - lastHeartbeatAtMs >= HEARTBEAT_INTERVAL_MS) {
-    String response = CommunicationProtocol::serializeOutgoingPostHeartbeat();
-    bleService.sendJson(response);
+    outgoingPostHearthbeat();
     lastHeartbeatAtMs = now;
   }
+}
+
+void CommunicationManager::outgoingPostMedicamentsTakenConfirmation() {
+  if (!bleService.isConnected()) {
+    return;
+  }
+
+  const unsigned long currentTimestamp = millis() / 1000;
+  String response = CommunicationProtocol::serializeOutgoingPostMedicamentsTaken(String(currentTimestamp));
+  bleService.sendJson(response);
+}
+
+void CommunicationManager::outgoingPostHearthbeat() {
+  if (!bleService.isConnected()) {
+    return;
+  }
+
+  String response = CommunicationProtocol::serializeOutgoingPostHeartbeat();
+  bleService.sendJson(response);
+}
+
+void CommunicationManager::outgoingGetNtcTime() {
+  if (!bleService.isConnected()) {
+    return;
+  }
+
+  const unsigned long currentTimestamp = millis() / 1000;
+  String response = CommunicationProtocol::serializeOutgoingGetNtcTime(currentTimestamp);
+  bleService.sendJson(response);
 }
 
 void CommunicationManager::onBleReceive(const std::string& value) {
@@ -51,6 +79,10 @@ void CommunicationManager::onBleReceive(const std::string& value) {
       bleService.sendJson(response);
       Serial.println("Sended requested configuration response");
       break;
+    }
+    case CommunicationProtocol::IncomingAction::GET_NTC_TIME: {
+      unsigned long unix_timestamp = CommunicationProtocol::deserializeIncomingGetNtcTimeTimestamp(doc);
+      // TODO sync timeclock
     }
     default:
       Serial.println("Unknown action");
