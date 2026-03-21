@@ -4,6 +4,7 @@
 #include "bluetooth_service.h"
 #include "eeprom_service.h"
 #include <string>
+#include <time_manager.h>
 
 class CommunicationManager {
 public:

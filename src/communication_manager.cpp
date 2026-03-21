@@ -82,7 +82,8 @@ void CommunicationManager::onBleReceive(const std::string& value) {
     }
     case CommunicationProtocol::IncomingAction::GET_NTC_TIME: {
       unsigned long unix_timestamp = CommunicationProtocol::deserializeIncomingGetNtcTimeTimestamp(doc);
-      // TODO sync timeclock
+      Time_manager::setRTC(unix_timestamp);
+      break;
     }
     default:
       Serial.println("Unknown action");
