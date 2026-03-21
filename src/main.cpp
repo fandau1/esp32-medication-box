@@ -25,8 +25,10 @@ void checkButton() {
       return;
     case Event::SinglePress:
       // user take the pill
+      if (!Buzzer::isAlarmOn()) {
+        Buzzer::buzz(1, 300, 0);
+      }
       pillsTracker.onPillTaken();
-      Buzzer::buzz(1, 300, 0);
       break;
     case Event::LongPress:
       // user reset the pills states
