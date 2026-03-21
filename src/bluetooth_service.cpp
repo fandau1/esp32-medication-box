@@ -1,4 +1,7 @@
 #include "bluetooth_service.h"
+#include "communication_protocol.h"
+#include <ArduinoJson.h>
+
 
 #include <BLE2902.h>
 #include <BLEDevice.h>
