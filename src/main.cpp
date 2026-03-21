@@ -51,4 +51,5 @@ void setup() {
 void loop() {
   button.readButton();    
   checkButton();
+  commManager.loop();
 }

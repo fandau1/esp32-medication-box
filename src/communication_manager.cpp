@@ -14,6 +14,22 @@ void CommunicationManager::begin() {
     });
 }
 
+void CommunicationManager::loop() {
+  static unsigned long lastHeartbeatAtMs = 0;
+  constexpr unsigned long HEARTBEAT_INTERVAL_MS = 60000;
+
+  if (!bleService.isConnected()) {
+    return;
+  }
+
+  const unsigned long now = millis();
+  if (now - lastHeartbeatAtMs >= HEARTBEAT_INTERVAL_MS) {
+    String response = CommunicationProtocol::serializeOutgoingPostHeartbeat();
+    bleService.sendJson(response);
+    lastHeartbeatAtMs = now;
+  }
+}
+
 void CommunicationManager::onBleReceive(const std::string& value) {
   Serial.println("Received: " + String(value.c_str()));
   JsonDocument doc;

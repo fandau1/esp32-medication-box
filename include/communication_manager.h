@@ -9,8 +9,10 @@ class CommunicationManager {
 public:
     CommunicationManager(BluetoothService& bleService, EEPROMService& eepromService);
     void begin();
+    void loop();
     void onBleReceive(const std::string& value);
-
+    void outgoingPostMedicamentsTakenConfirmation();
+    void outgoingPostHearthbeat();
 private:
     BluetoothService& bleService;
     EEPROMService& eepromService;
