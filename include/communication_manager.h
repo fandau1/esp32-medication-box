@@ -12,7 +12,7 @@ public:
     void begin();
     void loop();
     void onBleReceive(const std::string& value);
-    void outgoingPostMedicamentsTakenConfirmation();
+    bool outgoingPostMedicamentsTakenConfirmation();
     void outgoingPostHearthbeat();
     void outgoingGetNtcTime();
 private:

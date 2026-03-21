@@ -29,14 +29,15 @@ void CommunicationManager::loop() {
   }
 }
 
-void CommunicationManager::outgoingPostMedicamentsTakenConfirmation() {
+bool CommunicationManager::outgoingPostMedicamentsTakenConfirmation() {
   if (!bleService.isConnected()) {
-    return;
+    return false;
   }
 
-  const unsigned long currentTimestamp = millis() / 1000;
+  const String currentTimestamp = Time_manager::getUTCString();
   String response = CommunicationProtocol::serializeOutgoingPostMedicamentsTaken(String(currentTimestamp));
   bleService.sendJson(response);
+  return true;
 }
 
 void CommunicationManager::outgoingPostHearthbeat() {

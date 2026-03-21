@@ -37,9 +37,10 @@ void PillsTracker::onPillTaken() {
 }
 
 void PillsTracker::notifyPillTaken() {
-    
-    savePillTaken();
-}
+    if (!communicationManager_.outgoingPostMedicamentsTakenConfirmation()) {
+        savePillTaken();
+    }
+  }
 
 void PillsTracker::savePillTaken() {
     EEPROMService::savePillTaken(Time_manager::getRTC());

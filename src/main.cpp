@@ -16,7 +16,7 @@
 BluetoothService bleService;
 CommunicationManager commManager(bleService);
 Button button;
-PillsTracker pilstracker;
+PillsTracker pillsTracker(commManager);
 
 void checkButton() {
   Event event = button.getEvent();
@@ -25,7 +25,7 @@ void checkButton() {
       return;
     case Event::SinglePress:
       // user take the pill
-      pilstracker.onPillTaken();
+      pillsTracker.onPillTaken();
       Buzzer::buzz(1, 300, 0);
       break;
     case Event::LongPress:
@@ -58,5 +58,5 @@ void loop() {
   button.readButton();    
   checkButton();
   commManager.loop();
-  pilstracker.onLoop();
+  pillsTracker.onLoop();
 }

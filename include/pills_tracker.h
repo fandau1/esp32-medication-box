@@ -5,16 +5,18 @@
 #include "eeprom_service.h"
 #include "Buzzer.h"
 #include "Time_manager.h"
+#include "communication_manager.h"
 
 class PillsTracker {
     public:
-        PillsTracker() = default;
+        PillsTracker(CommunicationManager& communicationManager) : communicationManager_(communicationManager) {};
         void onLoop();
         void onPillTaken();
         void notifyPillTaken();
         void savePillTaken();
 
     private:
+      CommunicationManager& communicationManager_;
         bool morningPillTaken = false;
         bool eveningPillTaken = false;
 };
