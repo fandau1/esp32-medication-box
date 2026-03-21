@@ -52,7 +52,7 @@ void BluetoothService::begin(const char* deviceName) {
   Serial.println("==============================");
 
   Serial.println("\nDEVICE NAME:");
-  Serial.println(deviceName);
+  Serial.print(deviceName);
 
   Serial.println("\nBLE UUIDs:");
   Serial.print("SERVICE: ");
@@ -90,8 +90,6 @@ void BluetoothService::begin(const char* deviceName) {
   advertising->start();
 
   Serial.println("\nBLE READY!");
-  Serial.println("Now open nRF Connect and search for:");
-  Serial.println(deviceName);
   Serial.println("==============================\n");
 }
 
