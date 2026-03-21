@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include "bluetooth_service.h"
+#include "eeprom_service.h"
+#include "communication_manager.h"
+#include <ArduinoJson.h>
 #include "Buzzer.h"
 #include "Button.h"
 
@@ -8,17 +11,10 @@
 #define BUZZER_PIN 18
 
 BluetoothService bleService;
+EEPROMService eepromService;
+CommunicationManager commManager(bleService, eepromService);
 Buzzer buzzer;
 Button button;
-
-unsigned long previousMillis = 0;
-const long interval = 2000;
-int counter = 0;
-
-void onBleReceive(const std::string& value) {
-  Serial.println("Přijato: " + String(value.c_str()));
-}
-
 
 void checkButton() {
   Event event = button.getEvent();
@@ -40,8 +36,10 @@ void setup() {
   Serial.begin(9600);
   analogReadResolution(12);
 
+  eepromService.begin();
+
   bleService.begin("ESP32_SENSOR");
-  bleService.setOnReceive(onBleReceive);
+  commManager.begin();
   buzzer.begin(BUZZER_PIN);
   button.setPin(BUTTON_PIN);
 
@@ -51,24 +49,10 @@ void setup() {
 
   pinMode(LED_EXTERNAL_PIN, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
-
-  buzzer.buzz(3, 200);
+  pinMode(BUZZER_PIN, OUTPUT);
 }
 
 void loop() {
-  unsigned long currentMillis = millis();
-  button.readButton();
-
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-
-    if (bleService.isConnected()) {
-      String json = "{\"ldr\":" + String(counter++) + "}";
-      bleService.sendJson(json);
-      Serial.println("Odesláno: " + json);
-    }
-  }
-  
-    
+  button.readButton();    
   checkButton();
 }
