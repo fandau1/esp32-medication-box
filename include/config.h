@@ -1,2 +1,13 @@
-#define PRESS_THRESHOLD 120
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define PRESS_THRESHOLD 100
 #define LONG_PRESS_THRESHOLD 1500
+
+#define BUTTON_PIN 14
+#define BUZZER_PIN 18
+
+#define LED_MORNING_PIN 25
+#define LED_EVENING_PIN 4
+
+#endif

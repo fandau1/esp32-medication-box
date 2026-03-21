@@ -6,12 +6,8 @@
 #include "Buzzer.h"
 #include "Button.h"
 #include "pills_tracker.h"
+#include "config.h"
 
-#define BUTTON_PIN 14
-#define BUZZER_PIN 18
-
-#define LED_MORNING_PIN 4 
-#define LED_EVENING_PIN 5
 
 BluetoothService bleService;
 CommunicationManager commManager(bleService);
@@ -24,11 +20,13 @@ void checkButton() {
     case Event::None:
       return;
     case Event::SinglePress:
+      Serial.println("Button single pressed");
       // user take the pill
       pillsTracker.onPillTaken();
       Buzzer::buzz(1, 300, 0);
       break;
     case Event::LongPress:
+      Serial.println("Button long pressed");
       // user reset the pills states
       Buzzer::buzz(1, 1000, 0);
       break;
