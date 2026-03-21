@@ -58,7 +58,7 @@ String serializeOutgoingPostHeartbeat() {
   return output;
 }
 
-String serializeOutgoingGetConfigurationSchedule() {
+String serializeIncomingGetConfigurationSchedule() {
   JsonDocument doc;
   doc["action"] = outgoingActionToString(OutgoingAction::GET_CONFIGURATION_SCHEDULE);
   String output;

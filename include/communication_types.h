@@ -1,3 +1,6 @@
+#ifndef COMUNICATION_TYPES_H
+#define COMUNICATION_TYPES_H
+
 // Define the schedule enum
 enum MedicationSchedule {
   SUNDAY_MORNING,
@@ -32,3 +35,5 @@ struct MedicationConfiguration {
   ScheduleSetting morning;
   ScheduleSetting evening;
 };
+
+#endif 
