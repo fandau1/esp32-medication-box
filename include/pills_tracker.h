@@ -7,4 +7,3 @@ class PillsTracker {
 };
 
 #endif // PILLS_TRACKER
-
