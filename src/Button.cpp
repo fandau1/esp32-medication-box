@@ -2,6 +2,7 @@
 
 void Button::setPin(uint8_t pin) {
     button_pin = pin;
+    pinMode(button_pin, INPUT_PULLUP);
 }
 
 Event Button::getEvent() {

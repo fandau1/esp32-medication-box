@@ -46,10 +46,6 @@ void setup() {
 
 
   Serial.println("BLE ready – ESP32_SENSOR");
-
-  pinMode(LED_EXTERNAL_PIN, OUTPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-  pinMode(BUZZER_PIN, OUTPUT);
 }
 
 void loop() {
