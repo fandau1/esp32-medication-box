@@ -20,6 +20,7 @@ class Button {
 	int button_pin;
     Event last_event = Event::None;
 
+    bool multiPress = false;
     bool pressed;
     unsigned long last_press_time = 0;
     unsigned long holding_time = 0;
