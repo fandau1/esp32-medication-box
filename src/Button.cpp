@@ -7,9 +7,7 @@ void Button::setPin(uint8_t pin) {
 
 Event Button::getEvent() {
     Event event = last_event;
-    if (!pressed) {
-        last_event = Event::None;
-    }
+    last_event = Event::None;
     return event;
 }
 
@@ -19,11 +17,12 @@ void Button::readButton() {
             if (!pressed) {
                 pressed = true;
                 last_press_time = current_time;
-                holding_time = 0;
             } else {
                 holding_time = current_time - last_press_time;
                 if (holding_time >= LONG_PRESS_THRESHOLD) {
                     last_event = Event::LongPress;
+                    last_press_time = current_time;
+                    multiPress = true;
                 }
             }
         } else {
@@ -31,9 +30,10 @@ void Button::readButton() {
                 pressed = false;
                 if (holding_time >= LONG_PRESS_THRESHOLD) {
                     last_event = Event::LongPress;
-                } else if (holding_time >= PRESS_THRESHOLD) {
+                } else if (holding_time >= PRESS_THRESHOLD && !multiPress) {
                     last_event = Event::SinglePress;
                 }
+                multiPress = false;
             }
         }
 }
