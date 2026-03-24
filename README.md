@@ -6,7 +6,7 @@
   <em>Finální produkt</em>
 </p>
 
-Tento projekt vznikl v rámci hackathonu Aimtec 2026. Jedná se o chytrou krabičku na léky postavenou na platformě ESP32.
+Tento projekt vznikl v rámci [Aimtec hackathonu 2026](https://www.aimtechackathon.cz/). Jedná se o chytrou krabičku na léky postavenou na platformě ESP32.
 
 ## O projektu
 
